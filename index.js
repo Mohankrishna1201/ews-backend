@@ -1,8 +1,6 @@
 const express = require('express');
 const admin = require('firebase-admin');
-const dotenv = require('dotenv');
-dotenv.config(); // Load environment variables from .env file
-const serviceAccount = JSON.parse(process.env.GOOGLE_CREDENTIALS); // Load from environment variable
+const serviceAccount = require('./credentials.json'); // Replace with your Firebase service account file path
 
 // Initialize Firebase Admin SDK
 admin.initializeApp({
