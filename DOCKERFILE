@@ -12,7 +12,9 @@ RUN npm install
 
 # Copy the rest of the application code, including index.js in the root
 COPY . .
-
+# Inject the credentials via build arguments or environment variables
+ARG FIREBASE_CREDENTIALS
+RUN echo "$FIREBASE_CREDENTIALS" > /app/credentials.json
 
 # Expose the port your app runs on
 EXPOSE 3000
