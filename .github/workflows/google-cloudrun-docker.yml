@@ -3,14 +3,14 @@ name: 'Build and Deploy to Cloud Run'
 on:
   push:
     branches:
-      - "main"
+      - 'main'
 
 env:
-  PROJECT_ID: 'ews-flood-439515' # Update to your Google Cloud project ID
+  PROJECT_ID: 'ews-flood-439515' 
   GAR_LOCATION: 'asia-south1'
   GAR_NAME: 'ews-flood'
-  REGION: 'asia-south1' # Update to your region
-  SERVICE: 'my-service' # Update to your service name
+  REGION: 'asia-south1'
+  SERVICE: 'my-service'
 
 jobs:
   deploy:
@@ -30,13 +30,20 @@ jobs:
         with:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
+      - name: 'Set up Docker Buildx'
+        uses: docker/setup-buildx-action@v2
+
       - name: 'Docker Auth'
         run: |
           gcloud auth configure-docker "${{ env.GAR_LOCATION }}-docker.pkg.dev"
 
+      # Passing the Firebase credentials as a build argument
       - name: 'Build and Push Container'
         run: |
-          docker build -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_NAME }}/${{ env.SERVICE }}:${{ github.sha }}" -f DOCKERFILE ./
+          echo "${{ secrets.FIREBASE_CREDENTIALS }}" | base64 -d > ./credentials.json
+          docker build \
+            --build-arg FIREBASE_CREDENTIALS="$(cat ./credentials.json)" \
+            -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_NAME }}/${{ env.SERVICE }}:${{ github.sha }}" .
           docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_NAME }}/${{ env.SERVICE }}:${{ github.sha }}"
 
       - name: 'Deploy to Cloud Run'
@@ -45,7 +52,7 @@ jobs:
           service: '${{ env.SERVICE }}'
           region: '${{ env.REGION }}'
           image: '${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_NAME }}/${{ env.SERVICE }}:${{ github.sha }}'
-
+          
       - name: 'Show output'
         run: |
           echo ${{ steps.deploy.outputs.url }}
