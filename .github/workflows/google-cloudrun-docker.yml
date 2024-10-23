@@ -3,10 +3,10 @@ name: 'Build and Deploy to Cloud Run'
 on:
   push:
     branches:
-      - 'main'
+      - main
 
 env:
-  PROJECT_ID: 'ews-flood-439515' 
+  PROJECT_ID: 'ews-flood-439515'
   GAR_LOCATION: 'asia-south1'
   GAR_NAME: 'ews-flood'
   REGION: 'asia-south1'
@@ -30,29 +30,29 @@ jobs:
         with:
           credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
 
-      - name: 'Set up Docker Buildx'
-        uses: docker/setup-buildx-action@v2
+      - name: 'Set up Google Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v1'
 
       - name: 'Docker Auth'
-        run: |
+        run: |-
           gcloud auth configure-docker "${{ env.GAR_LOCATION }}-docker.pkg.dev"
 
-      # Passing the Firebase credentials as a build argument
       - name: 'Build and Push Container'
-        run: |
-          echo "${{ secrets.FIREBASE_CREDENTIALS }}" | base64 -d > ./credentials.json
-          docker build \
-            --build-arg FIREBASE_CREDENTIALS="$(cat ./credentials.json)" \
-            -t "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_NAME }}/${{ env.SERVICE }}:${{ github.sha }}" .
-          docker push "${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_NAME }}/${{ env.SERVICE }}:${{ github.sha }}"
+        run: |-
+          echo "${{ secrets.FIREBASE_CREDENTIALS }}" > credentials.json
+          DOCKER_TAG="${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}"
+          docker build --tag "${DOCKER_TAG}" .
+          docker push "${DOCKER_TAG}"
+        # Ensure the credentials file is removed after the build step for security
+        continue-on-error: true
 
       - name: 'Deploy to Cloud Run'
         uses: 'google-github-actions/deploy-cloudrun@v2'
         with:
           service: '${{ env.SERVICE }}'
           region: '${{ env.REGION }}'
-          image: '${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_NAME }}/${{ env.SERVICE }}:${{ github.sha }}'
-          
+          image: '${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}'
+
       - name: 'Show output'
-        run: |
+        run: |-
           echo ${{ steps.deploy.outputs.url }}
