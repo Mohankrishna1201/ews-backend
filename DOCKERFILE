@@ -17,7 +17,7 @@ ARG FIREBASE_CREDENTIALS
 RUN echo "$FIREBASE_CREDENTIALS" > /usr/src/app/credentials.json
 
 # Expose the port your app runs on
-EXPOSE 3000
+EXPOSE 8080
 
 # Start the application using nodemon
 CMD ["node", "index.js"]
