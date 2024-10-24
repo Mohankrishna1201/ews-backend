@@ -10,7 +10,7 @@ dotenv.config();
 
 
 
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect('mongodb+srv://21ee01037:KyL293koQ9w0kgXC@cluster0.lyoti.mongodb.net/')
     .then(() => console.log('MongoDB connected successfully'))
     .catch((error) => console.log('Error connecting to MongoDB:', error));
 
