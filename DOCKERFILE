@@ -20,4 +20,4 @@ COPY credentials.json ./
 EXPOSE 3000
 
 # Start the application using nodemon
-CMD ["nodemon", "index.js"]
+CMD ["node", "index.js"]

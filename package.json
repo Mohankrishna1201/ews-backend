@@ -15,6 +15,7 @@
     "ews-backend": "file:",
     "express": "^4.21.1",
     "firebase-admin": "^12.6.0",
+    "mongoose": "^8.7.2",
     "nodemon": "^3.1.7"
   }
 }
