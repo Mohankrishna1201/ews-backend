@@ -51,7 +51,7 @@ jobs:
           image: '${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_NAME }}/${{ env.SERVICE }}:${{ github.sha }}'
           # Use Google Cloud Secret Manager to mount firebase credentials.json
           secrets: >
-            /app/credentials.json=projects/${{ env.PROJECT_ID }}/secrets/firebase-credentials/versions/latest
+              /app/credentials.json=projects/${{ env.PROJECT_ID }}/secrets/firebase-credentials:latest
 
       - name: 'Show output'
         run: |-
