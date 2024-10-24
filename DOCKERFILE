@@ -13,11 +13,9 @@ RUN npm install
 # Copy the rest of the application code, including index.js in the root
 COPY . .
 
-# Copy the credentials.json file into the container
-COPY credentials.json ./
 
 # Expose the port your app runs on
-EXPOSE 3000
+EXPOSE 8080
 
 # Start the application using nodemon
 CMD ["node", "index.js"]
