@@ -3,7 +3,8 @@ const Token = require('../schema/token');
 // Replace with your Firebase service account file path
 const admin = require('firebase-admin');
 // Initialize Firebase Admin SDK
-const serviceAccount = require('../credentials.json');
+// const serviceAccount = require('../credentials.json');
+const serviceAccount = require('/app/credentials.json');
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
 });
