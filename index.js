@@ -1,6 +1,6 @@
 const express = require('express');
 const admin = require('firebase-admin');
-const serviceAccount = require('./credentials.json'); // Replace with your Firebase service account file path
+const serviceAccount =  require('/app/credentials.json'); // Replace with your Firebase service account file path
 
 // Initialize Firebase Admin SDK
 admin.initializeApp({
