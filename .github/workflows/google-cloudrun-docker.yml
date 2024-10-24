@@ -39,11 +39,9 @@ jobs:
 
       - name: 'Build and Push Container'
         run: |-
-         echo "${{ secrets.FIREBASE_CREDENTIALS }}" > credentials.json
          DOCKER_TAG="${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_NAME }}/${{ env.SERVICE }}:${{ github.sha }}"
          docker build --file DOCKERFILE --tag "${DOCKER_TAG}" .
          docker push "${DOCKER_TAG}"
-
 
       - name: 'Deploy to Cloud Run'
         uses: 'google-github-actions/deploy-cloudrun@v2'
@@ -51,6 +49,9 @@ jobs:
           service: '${{ env.SERVICE }}'
           region: '${{ env.REGION }}'
           image: '${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.GAR_NAME }}/${{ env.SERVICE }}:${{ github.sha }}'
+          # Use Google Cloud Secret Manager to mount firebase credentials.json
+          secrets: >
+            /app/credentials.json=projects/${{ env.PROJECT_ID }}/secrets/firebase-credentials/versions/latest
 
       - name: 'Show output'
         run: |-
