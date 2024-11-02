@@ -25,8 +25,9 @@ const sendMessage = async (req, res) => {
         },
         android: {
             notification: {
-                sound: 'default',
+                sound: 'emergency.mp3',
                 priority: 'high',
+                channelId: "sound_channel"
             },
         },
         data: data || {},
