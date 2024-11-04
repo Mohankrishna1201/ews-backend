@@ -25,8 +25,9 @@ const sendMessage = async (req, res) => {
         },
         android: {
             notification: {
-                sound: 'default',
+                sound: 'emergency.mp3',
                 priority: 'high',
+                channelId: 'sound_channel'
             },
         },
         data: data || {},
@@ -67,11 +68,13 @@ const sendMessageToAllUsers = async (req, res) => {
             },
             android: {
                 notification: {
-                    sound: 'emergency',
+                    sound: 'emergency.mp3',
                     priority: 'high',
                     vibrateTimingsMillis: [0, 1000, 1000, 1000],  // Custom vibration pattern
                     visibility: 'public',
-                    image: 'https://media.istockphoto.com/id/1152189152/vector/red-alert-icon.jpg?s=612x612&w=0&k=20&c=Kw_-i314F4cxgn2hmakp-88-O45FSx62c6r-OzKYMw4=',  // Image icon
+                    image: 'https://media.istockphoto.com/id/1152189152/vector/red-alert-icon.jpg?s=612x612&w=0&k=20&c=Kw_-i314F4cxgn2hmakp-88-O45FSx62c6r-OzKYMw4=',
+                    channelId: 'sound_channel',
+                    
 
                 },
             },
