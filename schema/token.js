@@ -12,6 +12,10 @@ const tokenSchema = mongoose.Schema({
         type: String,
         lowercase: true
     },
+    role: {
+        type: String,
+
+    },
     createdAt: {
         type: Date,
         default: Date.now,

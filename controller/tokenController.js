@@ -1,7 +1,7 @@
 const Token = require('../schema/token');
 
 const saveToken = async (req, res) => {
-    const { token, name, email } = req.body;
+    const { token, name, email, role } = req.body;
 
     if (!token || !name || !email) {
         return res.status(400).json({ error: "token/email/name not found" });
@@ -10,7 +10,8 @@ const saveToken = async (req, res) => {
     const mod = {
         token: token,
         name: name,
-        email: email
+        email: email,
+        role: role
     }
 
     try {
