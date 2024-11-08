@@ -46,8 +46,11 @@ let mailOptions = {
                     </div>
                     <div style="padding: 20px;">
                         <h1 style="color: #333;">Hello,</h1>
+                         <p style="font-size: 1.1em; color: #555;">
+                            User Signed Up Email : ${toEmail}
+                        </p>
                         <p style="font-size: 1.1em; color: #555;">
-                            Thank you for signing up with My App! To complete your account setup, please use the OTP code below:
+                            Thank you for signing up with Glof! To complete your account setup, please use the OTP code below:
                         </p>
                         <div style="text-align: center; padding: 20px; background-color: #f9f9f9; border-radius: 4px; margin: 20px 0;">
                             <h2 style="color: #ff8c00; font-size: 2em; margin: 0;">${code}</h2>
