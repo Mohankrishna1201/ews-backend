@@ -1,4 +1,4 @@
-const { sendSocketMessageToAllAdmins } = require('../controller/msgController')
+const { sendMessageToAllAdmins } = require('../controller/msgController')
 let shdAlert = true;
 const onConnect = () => { }
 const onTEst = (socket) => {
@@ -10,7 +10,14 @@ const onDataRecieved = (socket, data) => {
     socket.broadcast.emit("sensor-data-middleware", data);
     const value = parseFloat(data)
     if (shdAlert && value < 20) {
-        sendSocketMessageToAllAdmins();
+        sendMessageToAllAdmins({
+            body: {
+                title: "title",
+                body: "body",
+                data: {}
+            }
+        });
+
         shdAlert = false;
         setTimeout(() => { shdAlert = true }, 20000)
     }
