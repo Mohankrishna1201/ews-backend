@@ -5,7 +5,8 @@ const onTEst = (socket) => {
     socket.emit("test-response", "Emitted Succesfully")
 }
 const onDataRecieved = (socket, data) => {
-    console.log(data, socket.id)
+    console.log(data, socket.id);
+    socket.broadcast.emit("sensor-data-middleware", data);
 }
 function socketHandler(socket) {
     socket.on("connection", onConnect);
