@@ -164,7 +164,7 @@ const sendSocketMessageToAllAdmins = async () => {
         const tokens = await Token.find({ role: 'admin' }).select('token');
 
         if (tokens.length === 0) {
-            return res.status(404).json({ success: false, message: 'No admin tokens found.' });
+            //return res.status(404).json({ success: false, message: 'No admin tokens found.' });
         }
 
         // Extract the tokens from the result
@@ -192,7 +192,7 @@ const sendSocketMessageToAllAdmins = async () => {
 
         // Send messages to all tokens
         const response = await admin.messaging().sendEachForMulticast(message);
-
+        console.log(response);
         if (response.failureCount > 0) {
             const failedTokens = [];
             response.responses.forEach((resp, idx) => {
@@ -203,10 +203,10 @@ const sendSocketMessageToAllAdmins = async () => {
             console.log('Failed tokens:', failedTokens);
         }
 
-        return res.status(200).json({ success: true, successCount: response.successCount, failureCount: response.failureCount });
+        // return res.status(200).json({ success: true, successCount: response.successCount, failureCount: response.failureCount });
     } catch (error) {
         console.error('Error sending notifications to admin users:', error);
-        return res.status(500).json({ success: false, error: error.message });
+        // return res.status(500).json({ success: false, error: error.message });
     }
 };
 
