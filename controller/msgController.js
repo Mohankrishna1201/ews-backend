@@ -2,7 +2,7 @@
 const Token = require('../schema/token');
 // Replace with your Firebase service account file path
 
-const admin = require('../index');
+const admin = require('firebase-admin');
 const imageUrl = "https://media.istockphoto.com/id/1152189152/vector/red-alert-icon.jpg?s=612x612&w=0&k=20&c=Kw_-i314F4cxgn2hmakp-88-O45FSx62c6r-OzKYMw4="
 
 const sendMessage = async (req, res) => {

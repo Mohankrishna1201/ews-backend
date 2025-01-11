@@ -2,7 +2,7 @@ const express = require('express');
 const admin = require('firebase-admin');
 const { socketHandler } = require("./socketController/SocketFile.js")
 // Initialize Firebase Admin SDK
-const serviceAccount = require('/app/credentials');
+const serviceAccount = require('./credentials');
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
 });
