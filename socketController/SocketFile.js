@@ -9,7 +9,7 @@ const onDataRecieved = (socket, data) => {
     console.log(data, socket.id);
     socket.broadcast.emit("sensor-data-middleware", data);
     const value = parseFloat(data)
-    if (shdAlert && value < 20) {
+    if (shdAlert && value < 16) {
         sendMessageToAllAdmins({
             body: {
                 title: "title",
