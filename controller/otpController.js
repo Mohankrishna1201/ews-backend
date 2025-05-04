@@ -3,7 +3,7 @@ const admin = require('../index');
 
 const otpGenerator = require('otp-generator')
 const nodemailer = require("nodemailer");
-
+//pjydpmibhonskphh
 
 // create reusable transporter object using the default SMTP transport
 const transporter = nodemailer.createTransport({
@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
     secure: false, // Use `true` for port 465, `false` for all other ports
     auth: {
         user: "code4fun.kattamuri@gmail.com",
-        pass: "pjydpmibhonskphh",
+        pass: "uxddribzplwfacyw",
     },
 });
 
